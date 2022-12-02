@@ -1,22 +1,14 @@
-import { useState } from 'react';
 import './ExpenseForm.css';
+import { useState } from 'react';
 const ExpenseForm = (props) => {
     const [enteredTitle, setEnteredTitle] = useState('');
     const [enteredAmount, setEnteredAmount] = useState('');
     const [enteredDate, setEnteredDate] = useState('');
-    const [showForm, setShowForm] = useState(false)
-
     // const [userInput, setUserInput] = useState({
     //     enteredTitle: '',
     //     enteredAmount: '',
     //     enteredDate: ''
     // })
-    const showFormHandler = (event) => {
-        setShowForm(true);
-    }
-    const hideFormHandler = (event) => {
-        setShowForm(false);
-    }
     const titleChangeHandler = (event) => {
         setEnteredTitle(event.target.value);
         // setUserInput({
@@ -59,12 +51,12 @@ const ExpenseForm = (props) => {
 
     return (
         <form onSubmit={submitHandler}>
-            {showForm ? <div className='new-expense__controls'>
+            <div className='new-expense__controls'>
                 <div className='new-expense__control'>
                     <label>Title</label>
                     <input
                         type='text' onChange={titleChangeHandler} value={enteredTitle}
-                    />
+                        required />
                 </div>
                 <div className='new-expense__control'>
                     <label>Amount</label>
@@ -73,7 +65,7 @@ const ExpenseForm = (props) => {
                         min='0.01'
                         step='0.01' value={enteredAmount}
                         onChange={amountChangeHandler}
-                    />
+                        required />
                 </div>
                 <div className='new-expense__control'>
                     <label>Date</label>
@@ -82,13 +74,13 @@ const ExpenseForm = (props) => {
                         min='2019-01-01'
                         max='2022-12-31' value={enteredDate}
                         onChange={dateChangeHandler}
-                    />
+                        required />
                 </div>
-            </div> : null}
+            </div>
 
             <div className='new-expense__actions'>
-                <button type='submit' onClick={showFormHandler}>Add Expense</button>
-                {showForm ? <button type='reset' onClick={hideFormHandler}>Cancel</button> : null}
+                <button type='reset' onClick={props.onCancel}>Cancel</button>
+                <button type='submit'>Add Expense</button>
             </div>
         </form>
     )
